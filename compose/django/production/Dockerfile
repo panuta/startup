@@ -1,4 +1,4 @@
-FROM python:3.6
+FROM python:3.6-alpine
 
 ENV PYTHONUNBUFFERED 1
 
@@ -10,15 +10,17 @@ COPY ./requirements /requirements
 RUN pip install --no-cache-dir -r /requirements/production.txt \
     && rm -rf /requirements
 
-COPY ./compose/django/gunicorn.sh ./compose/django/entrypoint.sh /
-RUN sed -i 's/\r//' /entrypoint.sh \
-    && sed -i 's/\r//' /gunicorn.sh \
-    && chmod +x /entrypoint.sh \
-    && chown django /entrypoint.sh \
-    && chmod +x /gunicorn.sh \
-    && chown django /gunicorn.sh
+COPY ./compose/production/django/gunicorn.sh /gunicorn.sh
+RUN sed -i 's/\r//' /gunicorn.sh
+RUN chmod +x /gunicorn.sh
+RUN chown django /gunicorn.sh
 
-COPY . /app
+COPY ./compose/production/django/entrypoint.sh /entrypoint.sh
+RUN sed -i 's/\r//' /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+RUN chown django /entrypoint.sh
+
+VOLUME /app
 
 RUN chown -R django /app
 
