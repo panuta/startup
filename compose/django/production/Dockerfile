@@ -4,7 +4,7 @@ ENV PYTHONUNBUFFERED 1
 
 RUN apk update \
   # psycopg2 dependencies
-  && apk add --virtual build-deps gcc python3-dev musl-dev \
+  && apk add --virtual build-base python3-dev musl-dev \
   && apk add postgresql-dev \
   # Pillow dependencies
   && apk add jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev \
@@ -19,12 +19,12 @@ COPY ./requirements /requirements
 RUN pip install --no-cache-dir -r /requirements/production.txt \
     && rm -rf /requirements
 
-COPY ./compose/production/django/gunicorn.sh /gunicorn.sh
+COPY ./compose/django/gunicorn.sh /gunicorn.sh
 RUN sed -i 's/\r//' /gunicorn.sh
 RUN chmod +x /gunicorn.sh
 RUN chown django /gunicorn.sh
 
-COPY ./compose/production/django/entrypoint.sh /entrypoint.sh
+COPY ./compose/django/entrypoint.sh /entrypoint.sh
 RUN sed -i 's/\r//' /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 RUN chown django /entrypoint.sh
