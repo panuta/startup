@@ -30,7 +30,7 @@ RUN sed -i 's/\r//' /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 RUN chown django /entrypoint.sh
 
-VOLUME /app
+COPY . /app
 
 RUN chown -R django /app
 
