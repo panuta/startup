@@ -1,5 +1,12 @@
 # Production dependencies
 -r _base.txt
 
-# Mailgun Support
-# django-mailgun==0.8.0
+# WSGI Handler
+# ------------------------------------------------
+gevent==1.2.2
+gunicorn==19.7.1
+
+
+# Email backends for Mailgun, Postmark, SendGrid and more
+# -------------------------------------------------------
+django-anymail==1.4
