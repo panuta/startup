@@ -23,12 +23,12 @@ RUN pip install --no-cache-dir -r /requirements/production.txt \
 COPY ./compose/django/gunicorn.sh /gunicorn.sh
 RUN sed -i 's/\r//' /gunicorn.sh
 RUN chmod +x /gunicorn.sh
-RUN chown django /gunicorn.sh
+# RUN chown django /gunicorn.sh
 
 COPY ./compose/django/entrypoint.sh /entrypoint.sh
 RUN sed -i 's/\r//' /entrypoint.sh
 RUN chmod +x /entrypoint.sh
-RUN chown django /entrypoint.sh
+# RUN chown django /entrypoint.sh
 
 VOLUME /app
 
