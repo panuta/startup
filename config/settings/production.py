@@ -4,7 +4,7 @@ from .base import *
 # WEBSITE
 # ------------------------------------------------------------------------------
 
-WEBSITE_DOMAIN = 'empathise.co'  # Do not include subdomain
+WEBSITE_DOMAIN = 'example.com'  # Do not include subdomain
 WEBSITE_URL = 'http://' + WEBSITE_DOMAIN
 
 
@@ -31,7 +31,7 @@ X_FRAME_OPTIONS = 'DENY'
 # SITE CONFIGURATION
 # ------------------------------------------------------------------------------
 
-ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['empathise.co', ])
+ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['example.com', ])
 
 INSTALLED_APPS += ('gunicorn', )
 
@@ -39,8 +39,8 @@ INSTALLED_APPS += ('gunicorn', )
 # EMAIL CONFIGURATION
 # ------------------------------------------------------------------------------
 DEFAULT_FROM_EMAIL = env('DJANGO_DEFAULT_FROM_EMAIL',
-                         default='Startup <noreply@empathise.co>')
-EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[Startup]')
+                         default='Django Startup <noreply@example.com>')
+EMAIL_SUBJECT_PREFIX = env('DJANGO_EMAIL_SUBJECT_PREFIX', default='[Django Startup]')
 SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
 
 # Anymail with Mailgun
@@ -134,7 +134,7 @@ LOGGING = {
     },
     'loggers': {
         'django.request': {
-            'handlers': ['mail_admins'],
+            'handlers': ['console', 'mail_admins'],
             'level': 'ERROR',
             'propagate': True
         },
