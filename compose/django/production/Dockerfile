@@ -12,8 +12,8 @@ RUN apk update \
   # CFFI dependencies
   && apk add libffi-dev openssl-dev py-cffi
 
-RUN addgroup -S django \
-    && adduser -S -G django django
+# RUN addgroup -S django \
+#     && adduser -S -G django django
 
 # Requirements have to be pulled and installed here, otherwise caching won't work
 COPY ./requirements /requirements
@@ -30,11 +30,10 @@ RUN sed -i 's/\r//' /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 RUN chown django /entrypoint.sh
 
-COPY . /app
+VOLUME /app
 
-RUN chown -R django /app
-
-USER django
+# RUN chown -R django /app
+# USER django
 
 WORKDIR /app
 
