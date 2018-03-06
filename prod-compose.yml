@@ -65,6 +65,8 @@ services:
     command: -notify-sighup nginx-proxy -watch -only-exposed /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
     container_name: nginx-gen
     restart: always
+    depends_on:
+      - nginx-proxy
     volumes:
       - ${NGINX_FILES_PATH:-./data}/conf.d:/etc/nginx/conf.d:rw
       - ${NGINX_FILES_PATH:-./data}/vhost.d:/etc/nginx/vhost.d:rw
@@ -77,6 +79,8 @@ services:
     image: jrcs/letsencrypt-nginx-proxy-companion
     container_name: nginx-letsencrypt
     restart: always
+    depends_on:
+      - nginx-gen
     volumes:
       - ${NGINX_FILES_PATH:-./data}/conf.d:/etc/nginx/conf.d:rw
       - ${NGINX_FILES_PATH:-./data}/vhost.d:/etc/nginx/vhost.d:rw
