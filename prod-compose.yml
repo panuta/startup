@@ -22,7 +22,7 @@ services:
     environment:
       VIRTUAL_HOST: empathise.co
 
-  nginx-proxy:
+  nginx:
     image: nginx:stable-alpine
     labels:
         com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
