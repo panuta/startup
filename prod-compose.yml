@@ -36,8 +36,8 @@ services:
       context: .
       dockerfile: compose/nginx/Dockerfile
     container_name: webserver
-    volumes:
-      - ./.var/django.sock:/var/run/django.sock:rw
+    # volumes:
+      # - ./.var/django.sock:/var/run/django.sock:rw
       # - ./staticfiles/:/usr/share/nginx/html/static/:ro
       # - ./media/:/usr/share/nginx/html/media/:rw
     environment:
@@ -93,7 +93,7 @@ services:
       NGINX_DOCKER_GEN_CONTAINER: nginx-gen
       NGINX_PROXY_CONTAINER: nginx-proxy
 
-networks:
-  default:
-    external:
-      name: webproxy
+# networks:
+#   default:
+#     external:
+#       name: webproxy
