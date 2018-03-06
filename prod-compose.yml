@@ -53,7 +53,7 @@ services:
     environment:
       NGINX_DOCKER_GEN_CONTAINER: nginx-gen
       NGINX_PROXY_CONTAINER: nginx
-
+      
   django:
     restart: always
     build:
@@ -63,6 +63,9 @@ services:
       - postgres
     volumes:
       - .:/app
+    environment:
+      VIRTUAL_HOST: empathise.co
+      VIRTUAL_PORT: 5000
     env_file: ./env/prod.env
     command: /gunicorn.sh
 
