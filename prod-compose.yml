@@ -51,6 +51,8 @@ services:
     labels:
         com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
     restart: always
+    depends_on:
+      - webserver
     ports:
       - "80:80"
       - "443:443"
