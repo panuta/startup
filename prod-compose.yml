@@ -37,7 +37,9 @@ services:
       dockerfile: compose/nginx/Dockerfile
     container_name: webserver
     volumes:
-      - .var/django.sock:/tmp/django.sock
+      - .var/django.sock:/var/run/django.sock
+      - staticfiles/:/usr/share/nginx/html/static/
+      - media/:/usr/share/nginx/html/media/
     environment:
       VIRTUAL_HOST: empathise.co
       LETSENCRYPT_HOST: empathise.co
