@@ -19,6 +19,8 @@ services:
     image: nginx:stable-alpine
     environment:
       VIRTUAL_HOST: empathise.co
+      LETSENCRYPT_HOST: empathise.co
+      LETSENCRYPT_EMAIL: panuta@gmail.com
 
   nginx-web:
     image: nginx:stable-alpine
@@ -28,7 +30,7 @@ services:
     restart: always
     ports:
       - "80:80"
-      # - "443:443"
+      - "443:443"
     volumes:
       - ${NGINX_FILES_PATH:-./data}/conf.d:/etc/nginx/conf.d
       - ${NGINX_FILES_PATH:-./data}/vhost.d:/etc/nginx/vhost.d
