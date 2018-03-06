@@ -22,6 +22,7 @@ services:
     environment:
       NGINX_PORT: 8080
       VIRTUAL_HOST: empathise.co
+      VIRTUAL_PORT: 8080
 
   nginx:
     image: nginx:stable-alpine
