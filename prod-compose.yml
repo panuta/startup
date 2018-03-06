@@ -11,8 +11,8 @@ services:
       context: .
       dockerfile: compose/postgres/Dockerfile
     volumes:
-      - postgres_data:/var/lib/postgresql/data:rw
-      - $HOME/postgresql_baks/:/backups:rw
+      - postgres_data:/var/lib/postgresql/data
+      - $HOME/postgresql_baks/:/backups
     env_file: ./env/prod.env
 
   redis:
@@ -27,7 +27,7 @@ services:
     depends_on:
       - postgres
     volumes:
-      - .:/app:rw
+      - .:/app
     env_file: ./env/prod.env
     command: /gunicorn.sh
 
@@ -57,9 +57,9 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./.nginx/conf.d:/etc/nginx/conf.d:rw
-      - ./.nginx/vhost.d:/etc/nginx/vhost.d:rw
-      - ./.nginx/html:/usr/share/nginx/html:rw
+      - ./.nginx/conf.d:/etc/nginx/conf.d
+      - ./.nginx/vhost.d:/etc/nginx/vhost.d
+      - ./.nginx/html:/usr/share/nginx/html
       - ./.nginx/certs:/etc/nginx/certs:ro
 
   nginx-gen:
@@ -70,9 +70,9 @@ services:
     depends_on:
       - nginx-proxy
     volumes:
-      - ./.nginx/conf.d:/etc/nginx/conf.d:rw
-      - ./.nginx/vhost.d:/etc/nginx/vhost.d:rw
-      - ./.nginx/html:/usr/share/nginx/html:rw
+      - ./.nginx/conf.d:/etc/nginx/conf.d
+      - ./.nginx/vhost.d:/etc/nginx/vhost.d
+      - ./.nginx/html:/usr/share/nginx/html
       - ./.nginx/certs:/etc/nginx/certs:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
@@ -84,9 +84,9 @@ services:
     depends_on:
       - nginx-gen
     volumes:
-      - ./.nginx/conf.d:/etc/nginx/conf.d:rw
-      - ./.nginx/vhost.d:/etc/nginx/vhost.d:rw
-      - ./.nginx/html:/usr/share/nginx/html:rw
+      - ./.nginx/conf.d:/etc/nginx/conf.d
+      - ./.nginx/vhost.d:/etc/nginx/vhost.d
+      - ./.nginx/html:/usr/share/nginx/html
       - ./.nginx/certs:/etc/nginx/certs:rw
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
