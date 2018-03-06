@@ -20,7 +20,7 @@ services:
 
   django:
     container_name: django
-    restart: always
+    # restart: always
     build:
       context: .
       dockerfile: compose/django/production/Dockerfile
