@@ -11,8 +11,8 @@ services:
       context: .
       dockerfile: compose/postgres/Dockerfile
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - $HOME/postgresql_baks/:/backups
+      - postgres_data:/var/lib/postgresql/data:rw
+      - $HOME/postgresql_baks/:/backups:rw
     env_file: ./env/prod.env
 
   redis:
@@ -27,7 +27,7 @@ services:
     depends_on:
       - postgres
     volumes:
-      - .:/app
+      - .:/app:rw
     env_file: ./env/prod.env
     command: /gunicorn.sh
 
@@ -37,9 +37,9 @@ services:
       dockerfile: compose/nginx/Dockerfile
     container_name: webserver
     volumes:
-      - ./.var/django.sock:/var/run/django.sock
-      - ./staticfiles/:/usr/share/nginx/html/static/
-      - ./media/:/usr/share/nginx/html/media/
+      - ./.var/django.sock:/var/run/django.sock:rw
+      - ./staticfiles/:/usr/share/nginx/html/static/:ro
+      - ./media/:/usr/share/nginx/html/media/:rw
     environment:
       VIRTUAL_HOST: empathise.co
       LETSENCRYPT_HOST: empathise.co
@@ -55,9 +55,9 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ${NGINX_FILES_PATH:-./data}/conf.d:/etc/nginx/conf.d
-      - ${NGINX_FILES_PATH:-./data}/vhost.d:/etc/nginx/vhost.d
-      - ${NGINX_FILES_PATH:-./data}/html:/usr/share/nginx/html
+      - ${NGINX_FILES_PATH:-./data}/conf.d:/etc/nginx/conf.d:rw
+      - ${NGINX_FILES_PATH:-./data}/vhost.d:/etc/nginx/vhost.d:rw
+      - ${NGINX_FILES_PATH:-./data}/html:/usr/share/nginx/html:rw
       - ${NGINX_FILES_PATH:-./data}/certs:/etc/nginx/certs:ro
 
   nginx-gen:
@@ -66,9 +66,9 @@ services:
     container_name: nginx-gen
     restart: always
     volumes:
-      - ${NGINX_FILES_PATH:-./data}/conf.d:/etc/nginx/conf.d
-      - ${NGINX_FILES_PATH:-./data}/vhost.d:/etc/nginx/vhost.d
-      - ${NGINX_FILES_PATH:-./data}/html:/usr/share/nginx/html
+      - ${NGINX_FILES_PATH:-./data}/conf.d:/etc/nginx/conf.d:rw
+      - ${NGINX_FILES_PATH:-./data}/vhost.d:/etc/nginx/vhost.d:rw
+      - ${NGINX_FILES_PATH:-./data}/html:/usr/share/nginx/html:rw
       - ${NGINX_FILES_PATH:-./data}/certs:/etc/nginx/certs:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
@@ -78,9 +78,9 @@ services:
     container_name: nginx-letsencrypt
     restart: always
     volumes:
-      - ${NGINX_FILES_PATH:-./data}/conf.d:/etc/nginx/conf.d
-      - ${NGINX_FILES_PATH:-./data}/vhost.d:/etc/nginx/vhost.d
-      - ${NGINX_FILES_PATH:-./data}/html:/usr/share/nginx/html
+      - ${NGINX_FILES_PATH:-./data}/conf.d:/etc/nginx/conf.d:rw
+      - ${NGINX_FILES_PATH:-./data}/vhost.d:/etc/nginx/vhost.d:rw
+      - ${NGINX_FILES_PATH:-./data}/html:/usr/share/nginx/html:rw
       - ${NGINX_FILES_PATH:-./data}/certs:/etc/nginx/certs:rw
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
