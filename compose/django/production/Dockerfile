@@ -25,6 +25,7 @@ COPY ./compose/django/entrypoint.sh /entrypoint.sh
 RUN sed -i 's/\r//' /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+EXPOSE 8000
 
 VOLUME /app
 WORKDIR /app
