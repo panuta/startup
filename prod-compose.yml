@@ -28,6 +28,7 @@ services:
       - redis
     volumes:
       - .:/app
+      - /var/run/django.sock:/tmp/django.sock
     env_file: ./env/prod.env
     command: /gunicorn.sh
 
