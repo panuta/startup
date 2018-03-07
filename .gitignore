@@ -3,6 +3,7 @@ production_local.py
 develop_local.py
 
 ### Production settings
+.var
 .nginx
 .logs
 
