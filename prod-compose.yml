@@ -5,59 +5,48 @@ volumes:
   caddy: {}
 
 services:
-  # postgres:
-  #   restart: always
-  #   build:
-  #     context: .
-  #     dockerfile: compose/postgres/Dockerfile
-  #   volumes:
-  #     - postgres_data:/var/lib/postgresql/data
-  #     - $HOME/postgresql_baks/:/backups
-  #   env_file: ./env/prod.env
+  postgres:
+    restart: always
+    build:
+      context: .
+      dockerfile: compose/postgres/Dockerfile
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - $HOME/postgresql_baks/:/backups
+    env_file: ./env/prod.env
 
-  # redis:
-  #   image: redis:latest
+  redis:
+    image: redis:latest
 
-  # django:
-  #   container_name: django
-  #   # restart: always
-  #   build:
-  #     context: .
-  #     dockerfile: compose/django/production/Dockerfile
-  #   depends_on:
-  #     - postgres
-  #   volumes:
-  #     - .:/app
-  #   env_file: ./env/prod.env
-  #   command: /gunicorn.sh
+  django:
+    container_name: django
+    restart: always
+    build:
+      context: .
+      dockerfile: compose/django/production/Dockerfile
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app
+    env_file: ./env/prod.env
+    command: /gunicorn.sh
 
   webserver:
     build:
       context: .
       dockerfile: compose/nginx/Dockerfile
     container_name: webserver
-    # depends_on:
-    #   - django
+    restart: always
+    depends_on:
+      - django
     # volumes:
       # - ./.var/django.sock:/var/run/django.sock:rw
-      # - ./staticfiles/:/usr/share/nginx/html/static/:ro
-      # - ./media/:/usr/share/nginx/html/media/:rw
+      - ./staticfiles/:/usr/share/nginx/html/static/:ro
+      - ./media/:/usr/share/nginx/html/media/:rw
     environment:
       VIRTUAL_HOST: empathise.co
       LETSENCRYPT_HOST: empathise.co
       LETSENCRYPT_EMAIL: panuta@gmail.com
-  
-  # nginx-proxy:
-  #   image: neilpang/nginx-proxy
-  #   ports:
-  #     - "80:80"
-  #     # - "443:443"
-  #   volumes:
-  #     - /var/run/docker.sock:/tmp/docker.sock:ro
-  #     - ./.proxy/certs:/etc/nginx/certs
-  #     - ./.proxy/acme:/acmecerts
-  #     - ./.proxy/conf.d:/etc/nginx/conf.d
-  #   # network_mode: "host"
 
   nginx-proxy:
     image: nginx:stable-alpine
