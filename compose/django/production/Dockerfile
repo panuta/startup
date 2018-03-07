@@ -30,4 +30,4 @@ EXPOSE 8000
 VOLUME /app
 WORKDIR /app
 
-ENTRYPOINT ["/entrypoint.sh"]
+# ENTRYPOINT ["/entrypoint.sh"]
