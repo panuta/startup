@@ -39,7 +39,7 @@ services:
     restart: always
     depends_on:
       - django
-    # volumes:
+    volumes:
       # - ./.var/django.sock:/var/run/django.sock:rw
       - ./staticfiles/:/usr/share/nginx/html/static/:ro
       - ./media/:/usr/share/nginx/html/media/:rw
