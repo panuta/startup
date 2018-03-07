@@ -84,9 +84,9 @@ services:
     depends_on:
       - nginx-proxy
     volumes:
-      # - ./.nginx/conf.d:/etc/nginx/conf.d
-      # - ./.nginx/vhost.d:/etc/nginx/vhost.d
-      # - ./.nginx/html:/usr/share/nginx/html
+      - ./.nginx/conf.d:/etc/nginx/conf.d
+      - ./.nginx/vhost.d:/etc/nginx/vhost.d
+      - ./.nginx/html:/usr/share/nginx/html
       - ./.nginx/certs:/etc/nginx/certs:ro
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl:ro
@@ -98,9 +98,9 @@ services:
     depends_on:
       - nginx-gen
     volumes:
-      # - ./.nginx/conf.d:/etc/nginx/conf.d
-      # - ./.nginx/vhost.d:/etc/nginx/vhost.d
-      # - ./.nginx/html:/usr/share/nginx/html
+      - ./.nginx/conf.d:/etc/nginx/conf.d
+      - ./.nginx/vhost.d:/etc/nginx/vhost.d
+      - ./.nginx/html:/usr/share/nginx/html
       - ./.nginx/certs:/etc/nginx/certs:rw
       - /var/run/docker.sock:/var/run/docker.sock:ro
     environment:
