@@ -1,6 +1,6 @@
 FROM nginx:stable-alpine
 
-COPY ./compose/nginx/nginx.conf /etc/nginx/nginx.conf
+# COPY ./compose/nginx/nginx.conf /etc/nginx/nginx.conf
 
 # VOLUME /var/run/django.sock
 # RUN chown nginx:nginx /var/run/django.sock
