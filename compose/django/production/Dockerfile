@@ -30,6 +30,6 @@ EXPOSE 8000
 VOLUME /app
 WORKDIR /app
 
-VOLUME /tmp/django.sock
+# VOLUME /tmp/django.sock
 
 ENTRYPOINT ["/entrypoint.sh"]
