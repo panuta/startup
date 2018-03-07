@@ -1,6 +1,7 @@
 version: '2'
 
 volumes:
+  gunicorn_socket: {}
   postgres_data: {}
 
 services:
@@ -28,7 +29,7 @@ services:
       - redis
     volumes:
       - .:/app
-      - /var/run/django.sock:/tmp/django.sock
+      - gunicorn_socket:/tmp/django.sock
     env_file: ./env/prod.env
     command: /gunicorn.sh
 
@@ -41,7 +42,7 @@ services:
     depends_on:
       - django
     volumes:
-      - ./.var/django.sock:/tmp/django.sock
+      - gunicorn_socket:/tmp/django.sock
       - ./staticfiles/:/usr/share/nginx/html/static/:ro
       - ./media/:/usr/share/nginx/html/media/:rw
     environment:
