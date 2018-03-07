@@ -40,7 +40,7 @@ services:
     depends_on:
       - django
     volumes:
-      - ./.var/django.sock:/var/run/django.sock
+      - ./.var/django.sock:/tmp/django.sock
       - ./staticfiles/:/usr/share/nginx/html/static/:ro
       - ./media/:/usr/share/nginx/html/media/:rw
     environment:
